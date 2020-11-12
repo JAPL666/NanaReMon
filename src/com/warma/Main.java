@@ -14,9 +14,11 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        HashMap<String, String> info = Login("184063052");
-        System.out.println(getInfo(info));
-        
+
+        HashMap<String, String> info = Login("");
+        if(info!=null){
+            System.out.println(getInfo(info));
+        }
     }
     public static String getInfo(HashMap<String,String> map){
         String url="http://sx.lcvc.cn//mobile/training/s_practice_rz.xhtml";
@@ -27,6 +29,10 @@ public class Main {
         String url="http://sx.lcvc.cn/mobile/common/login.xhtml";
         String str="account="+account+"&apassword="+getMD5String(account)+"&atype=2";
         String ret=POST(url,str,"");
+
+        if(ret.contains("-2")){
+            return null;
+        }
 
         ret=ret.replace("{\"","");
         ret=ret.replace("\"}","");
