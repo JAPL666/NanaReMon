@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
+
         StringBuffer str=new StringBuffer();
         StringBuffer in=new StringBuffer();
         String path="C:\\Users\\86176\\Desktop\\学号.txt";
@@ -17,8 +18,8 @@ public class Main {
             if(info!=null){
                 String x=getInfo(info);
                 str.append(account).append("\n");
-                in.append(x).append("\n");
-                System.out.println(x+"\n");
+                in.append(x);
+                System.out.println(x);
             }else{
                 System.out.println("账号："+account+"登录失败！");
             }
@@ -26,6 +27,7 @@ public class Main {
         //保存可用账户
         Warma.write(new File(path).getParent()+"\\可用学号.txt",str);
         Warma.write(new File(path).getParent()+"\\周记.txt",in);
+        System.out.println("可用账号："+str.toString().split("\n").length+"个");
         System.out.println("文件保存成功！");
 
     }
