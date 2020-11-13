@@ -4,17 +4,27 @@ import java.io.File;
 import java.util.HashMap;
 
 public class Main {
+    static StringBuffer str=new StringBuffer();
+    static StringBuffer in=new StringBuffer();
     public static void main(String[] args) {
 
-        StringBuffer str=new StringBuffer();
-        StringBuffer in=new StringBuffer();
-        String path="C:\\Users\\86176\\Desktop\\学号.txt";
+        String path="C:\\Users\\Administrator\\IdeaProjects\\NanaReMon\\学号.txt";
         String[] accounts=Warma.read(path).split("\n");
 
-        for (String account:accounts){
-            account=account.trim();
-            HashMap<String, String> info = Login(account);
+        start(accounts,0,accounts.length);
 
+        //保存可用账户
+        Warma.write(new File(path).getParent()+"\\可用学号.txt",str);
+        Warma.write(new File(path).getParent()+"\\周记.txt",in);
+        System.out.println("可用账号："+str.toString().split("\n").length+"个");
+        System.out.println("文件保存成功！");
+
+    }
+    public static void start(String[] accounts,int a,int b){
+        for (int i=a;i<b;i++){
+            String account=accounts[i].trim();
+
+            HashMap<String, String> info = Login(account);
             if(info!=null){
                 String x=getInfo(info);
                 str.append(account).append("\n");
@@ -24,12 +34,6 @@ public class Main {
                 System.out.println("账号："+account+"登录失败！");
             }
         }
-        //保存可用账户
-        Warma.write(new File(path).getParent()+"\\可用学号.txt",str);
-        Warma.write(new File(path).getParent()+"\\周记.txt",in);
-        System.out.println("可用账号："+str.toString().split("\n").length+"个");
-        System.out.println("文件保存成功！");
-
     }
     public static String getInfo(HashMap<String,String> map){
         String url="http://sx.lcvc.cn//mobile/training/s_practice_rz.xhtml";
