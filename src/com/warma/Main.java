@@ -7,39 +7,58 @@ import java.util.Stack;
 public class Main {
     static StringBuffer str=new StringBuffer();
     static StringBuffer in=new StringBuffer();
+    static int num=64;
+    static boolean bool=true;
     public static void main(String[] args) {
 
         String path = System.getProperty("user.dir")+"\\学号.txt";
         String[] accounts=Warma.read(path).split("\n");
 
-        Stack<String> stack=new Stack<>();
-        for (String str:accounts){
-            stack.push(str.trim());
-        }
-
-        for (int i=0;i<64;i++){
-            new Thread(){
-                @Override
-                public void run() {
-                    super.run();
-                    while (true){
-                        if(!stack.isEmpty()){
-                            System.out.println(stack.pop());
-                        }else{
-                            break;
-                        }
-                    }
-                }
-            }.start();
-        }
-
-//        start(accounts,0,accounts.length);
+//        Stack<String> stack=new Stack<>();
+//        for (String str:accounts){
+//            stack.push(str.trim());
+//        }
 //
-//        //保存可用账户
-//        Warma.write(new File(path).getParent()+"\\可用学号.txt",str);
-//        Warma.write(new File(path).getParent()+"\\周记.txt",in);
-//        System.out.println("可用账号："+str.toString().split("\n").length+"个");
-//        System.out.println("文件保存成功！");
+//        for (int i=0;i<num;i++){
+//            new Thread(){
+//                @Override
+//                public void run() {
+//                    super.run();
+//                    while (true){
+//                        if(!stack.isEmpty()){
+//                            String account=stack.pop();
+//                            HashMap<String, String> info = Login(account);
+//
+//                            if(info!=null){
+//                                String x=getInfo(info);
+//                                str.append(account).append("\n");
+//                                in.append(x);
+//                            }else{
+//                                System.out.println("账号："+account+"登录失败！");
+//                            }
+//                        }else{
+//                            if(bool){
+//                                bool=false;
+//                                //保存可用账户
+//                                Warma.write(new File(path).getParent()+"\\可用学号.txt",str);
+//                                Warma.write(new File(path).getParent()+"\\周记.txt",in);
+//                                System.out.println("可用账号："+str.toString().split("\n").length+"个");
+//                                System.out.println("文件保存成功！");
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }
+//            }.start();
+//        }
+
+        start(accounts,0,accounts.length);
+
+        //保存可用账户
+        Warma.write(new File(path).getParent()+"\\可用学号.txt",str);
+        Warma.write(new File(path).getParent()+"\\周记.txt",in);
+        System.out.println("可用账号："+str.toString().split("\n").length+"个");
+        System.out.println("文件保存成功！");
 
     }
     public static void start(String[] accounts,int a,int b){
