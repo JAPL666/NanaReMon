@@ -4,8 +4,7 @@ import java.util.Base64;
 import java.util.HashMap;
 
 public class QQSignIn {
-    public static void main(String[] args) {
-
+    public String start(){
         //QQ签到
         String url="http://ti.qq.com/hybrid-h5/api/json/daily_attendance/SignIn";
         String str=new String(Base64.getDecoder().decode("eyJ1aW4iOiIyNDUzODg1NDI4IiwidHlwZSI6MSwic0lkIjoiIiwicXVhIjoiVjFfQU5EX1NRXzguNC4xMF8xNTI0X1lZQl9EIiwibXBFeHRlbmQiOnsiMV9kYWlseUdkdERldmljZV9pbmZvIjoie1wiYWlkX3RpY2tldFwiOlwiMDFFMDZFQjQzNjBENzY0NzZBQkEwMkFDMUFDNkUwOEIwRjYwMUQ0Q0IwMDZEQTRFNjZcIixcImFwcF92ZXJzaW9uX2lkXCI6NTM3MDY1OTg0LFwiYnJhbmRcIjpcIlhpYW9taVwiLFwiY2Fycmllcl9jb2RlXCI6NDYwMDEsXCJjbGllbnRfaXB2NFwiOlwiMTcxLjM3LjQ1LjEwM1wiLFwiY29ublwiOjEsXCJkZXZpY2VfYnJhbmRfYW5kX21vZGVsXCI6XCJNSSA4IFVEXCIsXCJkZXZpY2VfZXh0XCI6XCJ7XFxcIndlY2hhdF9pbnN0YWxsZWRfaW5mb1xcXCI6e1xcXCJoYXNfdW5pdmVyc2FsX2xpbmtcXFwiOmZhbHNlLFxcXCJhcGlfdmVyXFxcIjpcXFwiNjU0MzE2NjAwXFxcIixcXFwiaW5zdGFsbGVkXFxcIjpmYWxzZX0sXFxcImF0dHJpX2luZm9cXFwiOntcXFwidWFcXFwiOlxcXCJEYWx2aWtcXFxcLzIuMS4wIChMaW51eDsgVTsgQW5kcm9pZCAxMDsgTUkgOCBVRCBNSVVJXFxcXC8yMC45LjQpXFxcIixcXFwidXVpZFxcXCI6e1xcXCJtXFxcIjpcXFwiNjg2QUU1OTkzQ0Y4MjA2MEYxQzU2RkRBQzA5OTZDRDJcXFwiLFxcXCJ2XFxcIjoxLFxcXCJ0XFxcIjpcXFwiMTU5ODE5OTI4MzI1MlxcXCIsXFxcInVcXFwiOlxcXCIyZWE1YmRhZi03Mzk4LTQ1YjQtYmM1Ni00MGZiMmFjM2YyMDlcXFwifX0sXFxcIm1xcV9jb25maWdfc3RhdHVzXFxcIjoxLFxcXCJhcHBfc3RhdHVzXFxcIjp7fSxcXFwicWFpZF9pbmZvXFxcIjp7fX1cIixcImlzX2dvb2dsZXBsYXlfdmVyc2lvblwiOmZhbHNlLFwibG9jYXRpb25cIjp7fSxcIm1hbnVmYWN0dXJlclwiOlwiWGlhb21pXCIsXCJtZDVfYW5kcm9pZF9pZFwiOlwiOTAzYjhjZjNjNTM5NjQ4OTE2YjQxYjg5NzQwODNhZTBcIixcIm11aWRfdHlwZVwiOjAsXCJvcmlnaW5fbmV0d29ya190eXBlXCI6MTMsXCJvc190eXBlXCI6MixcIm9zX3ZlclwiOlwiMTBcIixcInFxX3ZlclwiOlwiOC40LjEwXCIsXCJ0YWlkX3RpY2tldFwiOlwiMDEwMTg2OUYzMjUyMERGOURBMDM1MzVGNkE2OTZGMDE4QkRGNEUzOUJEOEUwMTQ4NEZFODBGNzE5MkUzNEQ0ODQ4RTA3QTE0Q0JDNEUzRjIxRTcxQUMzRFwifSJ9fQ=="));
@@ -30,10 +29,12 @@ public class QQSignIn {
         map.put("Q-QIMEI","869785035267018");
         map.put("Q-Auth","31045b957cf33acf31e40be2f3e71c5217597676a9729f1b");
         String result=Warma.post(url,str,map);
-        System.out.println(result);
-
-
-
-
+        if(result.contains("\"retCode\":0")){
+            return "QQ:签到成功！";
+        }else if(result.contains("\"retCode\":1")){
+            return "QQ:已经签到过了！";
+        }else{
+            return "QQ:签到失败!";
+        }
     }
 }
