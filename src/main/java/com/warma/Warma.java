@@ -6,8 +6,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 public class Warma {
     //读取文件
@@ -89,6 +92,49 @@ public class Warma {
                 }
                 is.close();
                 message.close();
+                return new String(message.toByteArray(), StandardCharsets.UTF_8);
+            }else{
+                System.out.println(code);
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "null";
+    }
+    public static String post(String url, String string, HashMap<String,String> requestProperty) {
+        try {
+            URL url2=new URL(url);
+            HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
+            connection.setRequestMethod("POST");
+            connection.addRequestProperty("Connection", "keep-alive");
+            Set<String> keySet = requestProperty.keySet();
+            for (String key:keySet){
+                connection.addRequestProperty(key,requestProperty.get(key));
+            }
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.connect();
+
+            byte[] data=string.getBytes();
+            connection.getOutputStream().write(data);
+            int code=connection.getResponseCode();
+            if(code==200){
+
+                InputStream is = connection.getInputStream();
+                String encoding = connection.getContentEncoding();
+                if(encoding!=null){
+                    //判断是否gzip
+                    if(encoding.equals("gzip")){
+                        is=new GZIPInputStream(is);
+                    }
+                }
+                ByteArrayOutputStream message =new ByteArrayOutputStream();
+                int lenght;
+                byte[] buffer =new byte[1024];
+                while((lenght=is.read(buffer))!=-1) {
+                    message.write(buffer,0,lenght);
+                }
                 return new String(message.toByteArray(), StandardCharsets.UTF_8);
             }else{
                 System.out.println(code);
