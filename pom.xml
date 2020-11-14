@@ -9,12 +9,14 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <!--json解析-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.11.3</version>
         </dependency>
 
+        <!--json生成-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
